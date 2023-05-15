@@ -46,6 +46,7 @@ public class PersonResource {
 
     @GetMapping("persons")
     public ResponseEntity<List<Note>> getAllPersons() {
-        return ResponseEntity(personService.getAllPersons());
+        //return ResponseEntity(personService.getAllPersons());
+        return null;
     }
 }
