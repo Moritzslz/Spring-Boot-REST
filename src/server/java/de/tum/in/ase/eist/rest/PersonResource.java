@@ -47,6 +47,6 @@ public class PersonResource {
 
     @GetMapping("persons")
     public ResponseEntity<List<Person>> getAllPersons(@RequestParam("sortingOptions") PersonSortingOptions sortingOptions) {
-       return ResponseEntity.ok(personService.getAllPersons(sortingOptions));
+        return ResponseEntity.ok(personService.getAllPersons(sortingOptions));
     }
 }
