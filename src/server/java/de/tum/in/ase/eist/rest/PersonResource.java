@@ -3,6 +3,7 @@ package de.tum.in.ase.eist.rest;
 import de.tum.in.ase.eist.model.Note;
 import de.tum.in.ase.eist.model.Person;
 import de.tum.in.ase.eist.service.PersonService;
+import de.tum.in.ase.eist.util.PersonSortingOptions;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,8 +46,7 @@ public class PersonResource {
     }
 
     @GetMapping("persons")
-    public ResponseEntity<List<Note>> getAllPersons() {
-        //return ResponseEntity(personService.getAllPersons());
-        return null;
+    public ResponseEntity<List<Person>> getAllPersons(@RequestBody PersonSortingOptions sortingOptions) {
+        return ResponseEntity.ok(personService.getAllPersons(sortingOptions));
     }
 }

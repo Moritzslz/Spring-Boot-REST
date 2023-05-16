@@ -36,6 +36,19 @@ public class PersonService {
 
     public List<Person> getAllPersons(PersonSortingOptions sortingOptions) {
         // TODO Part 3: Add sorting here
-        return new ArrayList<>(this.persons);
+        List<Person> sortedResult = persons;
+        Comparator<Person> comparator = switch (sortingOptions.getSortField()) {
+            case ID -> Comparator.comparing(Person::getId);
+            case FIRST_NAME -> Comparator.comparing(Person::getFirstName);
+            case LAST_NAME -> Comparator.comparing(Person::getLastName);
+            case BIRTHDAY -> Comparator.comparing(Person::getBirthday);
+        };
+
+        if (sortingOptions.getSortingOrder().equals(PersonSortingOptions.SortingOrder.DESCENDING)) {
+            comparator = comparator.reversed();
+        }
+
+        sortedResult.sort(comparator);
+        return sortedResult;
     }
 }
