@@ -32,7 +32,7 @@ public class PersonResource {
     }
 
     @PostMapping("persons/{personId}")
-    public ResponseEntity<Person> updatePersonupdateNote(@RequestBody Person updatedPerson, @PathVariable("personId") UUID personId) {
+    public ResponseEntity<Person> updatePerson(@RequestBody Person updatedPerson, @PathVariable("personId") UUID personId) {
         if (updatedPerson.getId().equals(personId)) {
             return ResponseEntity.ok(personService.savePerson(updatedPerson));
         }
