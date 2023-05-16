@@ -39,7 +39,7 @@ public class PersonResource {
         return ResponseEntity.badRequest().build();
     }
 
-    @PostMapping("persons/{personId}")
+    @DeleteMapping("persons/{personId}")
     public ResponseEntity<Void> deletePerson(@PathVariable("personId") UUID personId) {
         personService.deletePerson(personId);
         return ResponseEntity.noContent().build();
