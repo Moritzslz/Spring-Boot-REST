@@ -18,7 +18,7 @@ public class PersonController {
 
     private final List<Person> persons;
 
-    PersonController() {
+    public PersonController() {
         this.webClient = WebClient.builder()
                 .baseUrl("http://localhost:8080/")
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
