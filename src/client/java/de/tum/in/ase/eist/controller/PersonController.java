@@ -6,6 +6,7 @@ import de.tum.in.ase.eist.util.PersonSortingOptions;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
@@ -57,10 +58,13 @@ public class PersonController {
     }
 
     public void getAllPersons(PersonSortingOptions sortingOptions, Consumer<List<Person>> personsConsumer) {
-        webClient.get().uri("persons").retrieve().bodyToMono(new ParameterizedTypeReference<List<Person>>() {}).onErrorStop()
-                .subscribe(newNotes -> {
+        webClient.get().uri(uriBuilder -> uriBuilder
+                .path("persons")
+                .queryParam("sortingOptions", sortingOptions)
+                .build()).retrieve().bodyToMono(new ParameterizedTypeReference<List<Person>>() {}).onErrorStop()
+                .subscribe(newPersons -> {
                     persons.clear();
-                    persons.addAll(newNotes);
+                    persons.addAll(newPersons);
                     personsConsumer.accept(persons);
                 });
     }

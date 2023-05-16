@@ -22,7 +22,6 @@ public class PersonResource {
         this.personService = personService;
     }
 
-    // TODO Part 1: Implement the specified endpoints here
     @PostMapping("persons")
     public ResponseEntity<Person> createPerson(@RequestBody Person person) {
         if (person.getId() == null) {
