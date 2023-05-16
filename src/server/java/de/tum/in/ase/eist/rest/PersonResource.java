@@ -47,6 +47,10 @@ public class PersonResource {
 
     @GetMapping("persons")
     public ResponseEntity<List<Person>> getAllPersons(@RequestParam("sortingOptions") PersonSortingOptions sortingOptions) {
-        return ResponseEntity.ok(personService.getAllPersons(sortingOptions));
+        if ((sortingOptions.getSortingOrder().equals(PersonSortingOptions.SortingOrder.ASCENDING) || sortingOptions.getSortingOrder().equals(PersonSortingOptions.SortingOrder.DESCENDING)) &&
+                (sortingOptions.getSortField().equals(PersonSortingOptions.SortField.BIRTHDAY) ||  sortingOptions.getSortField().equals(PersonSortingOptions.SortField.ID) ||
+                sortingOptions.getSortField().equals(PersonSortingOptions.SortField.FIRST_NAME) ||  sortingOptions.getSortField().equals(PersonSortingOptions.SortField.LAST_NAME)))
+            return ResponseEntity.ok(personService.getAllPersons(sortingOptions));
+        return ResponseEntity.badRequest().build();
     }
 }
