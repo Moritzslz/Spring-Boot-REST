@@ -37,7 +37,7 @@ public class PersonController {
 
     public void updatePerson(Person person, Consumer<List<Person>> personsConsumer) {
         webClient.put()
-                .uri("persons" + person.getId())
+                .uri("persons/" + person.getId())
                 .bodyValue(person)
                 .retrieve()
                 .bodyToMono(Person.class)
@@ -49,7 +49,7 @@ public class PersonController {
     }
 
     public void deletePerson(Person person, Consumer<List<Person>> personsConsumer) {
-        webClient.delete().uri("persons" + person.getId()).retrieve().toBodilessEntity().onErrorStop()
+        webClient.delete().uri("persons/" + person.getId()).retrieve().toBodilessEntity().onErrorStop()
                 .subscribe(v -> {
                     persons.remove(person);
                     personsConsumer.accept(persons);
