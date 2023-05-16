@@ -31,7 +31,7 @@ public class PersonResource {
         return ResponseEntity.badRequest().build();
     }
 
-    @PostMapping("persons/{personId}")
+    @PutMapping("persons/{personId}")
     public ResponseEntity<Person> updatePerson(@RequestBody Person updatedPerson, @PathVariable("personId") UUID personId) {
         if (updatedPerson.getId().equals(personId)) {
             return ResponseEntity.ok(personService.savePerson(updatedPerson));
@@ -46,7 +46,7 @@ public class PersonResource {
     }
 
     @GetMapping("persons")
-    public ResponseEntity<List<Person>> getAllPersons(@RequestBody PersonSortingOptions sortingOptions) {
+    public ResponseEntity<List<Person>> getAllPersons(@RequestParam PersonSortingOptions sortingOptions) {
         return ResponseEntity.ok(personService.getAllPersons(sortingOptions));
     }
 }
