@@ -46,10 +46,14 @@ public class PersonResource {
 
     @GetMapping("persons")
     public ResponseEntity<List<Person>> getAllPersons(@RequestParam("sortingOptions") PersonSortingOptions sortingOptions) {
-        if ((sortingOptions.getSortingOrder().equals(PersonSortingOptions.SortingOrder.ASCENDING) || sortingOptions.getSortingOrder().equals(PersonSortingOptions.SortingOrder.DESCENDING)) &&
-                (sortingOptions.getSortField().equals(PersonSortingOptions.SortField.BIRTHDAY) ||  sortingOptions.getSortField().equals(PersonSortingOptions.SortField.ID) ||
-                sortingOptions.getSortField().equals(PersonSortingOptions.SortField.FIRST_NAME) ||  sortingOptions.getSortField().equals(PersonSortingOptions.SortField.LAST_NAME)))
+        Enum order = sortingOptions.getSortingOrder();
+        Enum field = sortingOptions.getSortField();
+        if ((order == PersonSortingOptions.SortingOrder.ASCENDING || order == PersonSortingOptions.SortingOrder.DESCENDING) &&
+                (field == PersonSortingOptions.SortField.ID ||  field == PersonSortingOptions.SortField.FIRST_NAME ||
+                        field == PersonSortingOptions.SortField.LAST_NAME ||  field == PersonSortingOptions.SortField.BIRTHDAY)) {
             return ResponseEntity.ok(personService.getAllPersons(sortingOptions));
-        return ResponseEntity.badRequest().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

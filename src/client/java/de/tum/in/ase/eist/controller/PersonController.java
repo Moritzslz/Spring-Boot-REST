@@ -59,9 +59,11 @@ public class PersonController {
 
     public void getAllPersons(PersonSortingOptions sortingOptions, Consumer<List<Person>> personsConsumer) {
         webClient.get().uri(uriBuilder -> uriBuilder
-                .path("persons")
-                .queryParam("sortingOptions", sortingOptions)
-                .build()).retrieve().bodyToMono(new ParameterizedTypeReference<List<Person>>() {}).onErrorStop()
+                                .path("persons")
+                                .queryParam("sortingOptions", sortingOptions.toString())
+                                .build())
+                        .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<List<Person>>() {}).onErrorStop()
                 .subscribe(newPersons -> {
                     persons.clear();
                     persons.addAll(newPersons);
