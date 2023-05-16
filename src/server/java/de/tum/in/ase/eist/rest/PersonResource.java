@@ -31,7 +31,7 @@ public class PersonResource {
         return ResponseEntity.badRequest().build();
     }
 
-    @PostMapping("persons/{personID}")
+    @PostMapping("persons/{personId}")
     public ResponseEntity<Person> updatePersonupdateNote(@RequestBody Person updatedPerson, @PathVariable("personId") UUID personId) {
         if (updatedPerson.getId().equals(personId)) {
             return ResponseEntity.ok(personService.savePerson(updatedPerson));
@@ -39,7 +39,7 @@ public class PersonResource {
         return ResponseEntity.badRequest().build();
     }
 
-    @PostMapping("persons/{personID}")
+    @PostMapping("persons/{personId}")
     public ResponseEntity<Void> deletePerson(@PathVariable("personId") UUID personId) {
         personService.deletePerson(personId);
         return ResponseEntity.noContent().build();
