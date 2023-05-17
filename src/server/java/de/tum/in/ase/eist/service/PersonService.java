@@ -34,15 +34,15 @@ public class PersonService {
         this.persons.removeIf(person -> person.getId().equals(personId));
     }
 
-    public List<Person> getAllPersons(PersonSortingOptions sortingOptions) {
-        Comparator<Person> comparator = switch (sortingOptions.getSortField()) {
+    public List<Person> getAllPersons(PersonSortingOptions.SortingOrder sortingOrder, PersonSortingOptions.SortField sortField) {
+        Comparator<Person> comparator = switch (sortField) {
             case ID -> Comparator.comparing(Person::getId);
             case FIRST_NAME -> Comparator.comparing(Person::getFirstName);
             case LAST_NAME -> Comparator.comparing(Person::getLastName);
             case BIRTHDAY -> Comparator.comparing(Person::getBirthday);
         };
 
-        if (sortingOptions.getSortingOrder() == PersonSortingOptions.SortingOrder.DESCENDING) {
+        if (sortingOrder == PersonSortingOptions.SortingOrder.DESCENDING) {
             comparator = comparator.reversed();
         }
 

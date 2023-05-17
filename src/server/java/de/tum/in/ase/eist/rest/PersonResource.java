@@ -45,13 +45,13 @@ public class PersonResource {
     }
 
     @GetMapping("persons")
-    public ResponseEntity<List<Person>> getAllPersons(@RequestParam("sortingOptions") PersonSortingOptions sortingOptions) {
-        Enum order = sortingOptions.getSortingOrder();
-        Enum field = sortingOptions.getSortField();
-        if ((order == PersonSortingOptions.SortingOrder.ASCENDING || order == PersonSortingOptions.SortingOrder.DESCENDING) &&
-                (field == PersonSortingOptions.SortField.ID ||  field == PersonSortingOptions.SortField.FIRST_NAME ||
-                        field == PersonSortingOptions.SortField.LAST_NAME ||  field == PersonSortingOptions.SortField.BIRTHDAY)) {
-            return ResponseEntity.ok(personService.getAllPersons(sortingOptions));
+    public ResponseEntity<List<Person>> getAllPersons(
+            @RequestParam(value = "sortField", required = false)PersonSortingOptions.SortField sortField,
+            @RequestParam(value = "sortingOrder", required = false)PersonSortingOptions.SortingOrder sortingOrder) {
+        if ((sortingOrder == PersonSortingOptions.SortingOrder.ASCENDING || sortingOrder == PersonSortingOptions.SortingOrder.DESCENDING) &&
+                (sortField == PersonSortingOptions.SortField.ID ||  sortField == PersonSortingOptions.SortField.FIRST_NAME ||
+                        sortField == PersonSortingOptions.SortField.LAST_NAME ||  sortField == PersonSortingOptions.SortField.BIRTHDAY)) {
+            return ResponseEntity.ok(personService.getAllPersons(sortingOrder, sortField));
         } else {
             return ResponseEntity.badRequest().build();
         }
