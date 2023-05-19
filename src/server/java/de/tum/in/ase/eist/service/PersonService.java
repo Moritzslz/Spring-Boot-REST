@@ -34,7 +34,10 @@ public class PersonService {
         this.persons.removeIf(person -> person.getId().equals(personId));
     }
 
-    public List<Person> getAllPersons(PersonSortingOptions.SortingOrder sortingOrder, PersonSortingOptions.SortField sortField) {
+    public List<Person> getAllPersons(PersonSortingOptions sortingOptions) {
+        PersonSortingOptions.SortField sortField = sortingOptions.getSortField();
+        PersonSortingOptions.SortingOrder sortingOrder = sortingOptions.getSortingOrder();
+
         Comparator<Person> comparator = switch (sortField) {
             case ID -> Comparator.comparing(Person::getId);
             case FIRST_NAME -> Comparator.comparing(Person::getFirstName);

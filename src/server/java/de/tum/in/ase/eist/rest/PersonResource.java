@@ -48,12 +48,12 @@ public class PersonResource {
     public ResponseEntity<List<Person>> getAllPersons(
             @RequestParam(value = "sortingOrder", required = false)PersonSortingOptions.SortingOrder sortingOrder,
             @RequestParam(value = "sortField", required = false)PersonSortingOptions.SortField sortField) {
-        if ((sortingOrder == PersonSortingOptions.SortingOrder.ASCENDING || sortingOrder == PersonSortingOptions.SortingOrder.DESCENDING) &&
-                (sortField == PersonSortingOptions.SortField.ID ||  sortField == PersonSortingOptions.SortField.FIRST_NAME ||
-                        sortField == PersonSortingOptions.SortField.LAST_NAME ||  sortField == PersonSortingOptions.SortField.BIRTHDAY)) {
-            return ResponseEntity.ok(personService.getAllPersons(sortingOrder, sortField));
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
+        if (sortField == null)
+            sortField = PersonSortingOptions.SortField.ID;
+        if (sortingOrder == null)
+            sortingOrder = PersonSortingOptions.SortingOrder.ASCENDING;
+
+        PersonSortingOptions sortingOptions = new PersonSortingOptions(sortingOrder, sortField);
+        return ResponseEntity.ok(personService.getAllPersons(sortingOptions));
     }
 }
